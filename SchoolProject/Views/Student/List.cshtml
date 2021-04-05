@@ -1,0 +1,17 @@
+﻿@model IEnumerable<SchoolProject.Models.Student>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<div class="list-container">
+    <h2>List of students</h2>
+    <form action="/Student/List" method="get">
+        <input type="text" id="tName" name="searchKey" placeholder="Enter name or student number" />
+        <input type="submit" value="Search" />
+    </form>
+    @foreach (var student in Model)
+    {
+        <div><a href="/Student/Show/@student.studentId">@student.studentFname @student.studentLname</a></div>
+    }
+</div>

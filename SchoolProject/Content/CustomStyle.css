@@ -1,0 +1,139 @@
+﻿body {
+}
+
+.navlink {
+    text-align: right;
+    margin-top: 0px;
+    margin-right: 10px;
+    float: right;
+    color: #219ebc;
+}
+.navlink:hover {
+    text-decoration: none;
+    color: #264653;
+    font-weight: bolder;
+}
+
+#containerlist, #containershow {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.listitem {
+    margin: 10px 0;
+}
+
+.filter_list a {
+    color: #264653;
+    font-size: 1.3em;
+}
+
+.filter_list a:hover {
+    color: #2a9d8f;
+    text-decoration: none;
+    font-weight: bolder;
+}
+
+input.filter-toggle:hover {
+    color: #6f1a07;
+    font-weight: bolder;
+}
+
+input.Submit {
+    background: #264653;
+    border: none;
+    color: #fff;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+input.Submit:hover {
+    background: #2a9d8f;
+}
+.filter-toggle {
+    background: none;
+    border: none;
+    color: #d62828;
+}
+
+.filter-toggle:hover{
+    color: #6f1a07;
+}
+
+.flex-container {
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0;
+}
+
+.filter-column {
+    flex: 1 0 0;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.collapsible-div {
+    text-align: right;
+    margin-right: 25%;
+    margin-top: 20px;
+}
+
+.detailed-list > *{
+    margin-left: 20px;
+    font-size: 1.2em;
+    padding-bottom: 5px;
+    color: #2B2118;
+}
+
+.navbar-inverse {
+    background-color: #03045E;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #fff;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: #ffb703;
+}
+
+.navbar-inverse .navbar-brand {
+     color: #fff; 
+}
+
+.navbar-inverse .navbar-brand:hover {
+    color: #fb8500;
+}
+
+.navbar-inverse:hover {
+    color: #ffb703;
+}
+
+h2 {
+    font-size: 3em;
+    color: #2A9D8F;
+}
+#name-div{
+    padding-top: 20px;
+}
+input {
+    border-radius: 5px;
+    border: 1px solid #8ecae6;
+    padding: 4px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+}
+
+label {
+    color: #1d3557;
+}
+
+.detailed-link {
+    color: #219EBC;
+}
+
+.detailed-link:hover {
+    color: #FB8500;
+    text-decoration: none;
+    font-weight: bolder;
+}
