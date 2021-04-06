@@ -16,6 +16,7 @@ namespace SchoolProject.Controllers
         }
 
         // GET: Student/List
+        // beta implementation : deprecated : use Student/Filter
         public ActionResult List(string searchKey=null)
         {
             StudentDataController controller = new StudentDataController();
@@ -23,6 +24,7 @@ namespace SchoolProject.Controllers
             return View(students);
         }
 
+        // GET: Student/Show
         public ActionResult Show(int id)
         {
             StudentDataController controller = new StudentDataController();

@@ -17,6 +17,7 @@ namespace SchoolProject.Controllers
         }
 
         // GET: Classes/Show/{}
+        // ActionResult function to display details about a particular class
         public ActionResult Show(int id)
         {
             ClassesDataController controller = new ClassesDataController();
@@ -25,6 +26,7 @@ namespace SchoolProject.Controllers
         }
 
         //POST: Classes/Filter/{}
+        // ActionResult function to filter and display all the classes that follows the defined constraints.
         public ActionResult Filter(string class_id = null, string class_code = null, string teacher_id = null,
             string date_start = null, string date_end = null, string class_name = null, string teacher_name = null, string employee_number = null)
         {

@@ -8,10 +8,10 @@ namespace SchoolProject.Models
 {
     public class SchoolDBContext
     {
-        private static string User { get { return "root"; } }
-        private static string Password { get { return "root"; } }
-        private static string Database { get { return "schooldb"; } }
-        private static string Server { get { return "localhost"; } }
+        private static string User { get { return "humber_student"; } }
+        private static string Password { get { return "humberisgreat"; } }
+        private static string Database { get { return "humber_school"; } }
+        private static string Server { get { return "bittsdevelopment.com"; } }
         private static string Port { get { return "3306"; } }
 
 

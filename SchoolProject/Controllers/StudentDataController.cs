@@ -118,15 +118,13 @@ namespace SchoolProject.Controllers
         }
 
         /// <summary>
-        /// This is a filter to apply on the list of teachers
+        /// A function to filter and list all the students that follows certain constraints
         /// </summary>
-        /// <param name="name">A substring of firstname and/or last name</param>
-        /// <param name="salaryLow">salary low point</param>
-        /// <param name="salaryHigh">salary high point</param>
-        /// <param name="hireDateLow">hiredate low point</param>
-        /// <param name="hireDateHigh">hiredate high point</param>
-        /// <param name="employeeNumber">an exact matching number</param>
-        /// <returns>A list of teachers who follows the conditions passed</returns>
+        /// <param name="name">Name of the student as mentioned in DB</param>
+        /// <param name="enrolDateLow">Enrol Date From of the student</param>
+        /// <param name="enrolDateHigh">Enrol Date To of the student</param>
+        /// <param name="studentInpNumber">Student ID as mentioned in the DB</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/StudentData/FilterStudents/{name?}/{enrolDateLow?}/{enrolDateHigh?}/{studentNumber?}")]
         public IEnumerable<Student> FilterStudents(string name = null, string enrolDateLow = null, string enrolDateHigh = null, string studentInpNumber = null)
@@ -158,7 +156,7 @@ namespace SchoolProject.Controllers
 
             // Storing the result of query execution into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();
-            // empty list of type Teacher
+            // empty list of type Student
             List<Student> StudentDetails = new List<Student> { };
 
 
@@ -180,13 +178,13 @@ namespace SchoolProject.Controllers
                     enrolDate = enrolDate
                 };
 
-                // Adding teacher object into a list
+                // Adding student object into a list
                 StudentDetails.Add(NewStudent);
             }
 
             // Close the connection
             Conn.Close();
-            // Return the list of teacher objects
+            // Return the list of student objects
             return StudentDetails;
         }
     }

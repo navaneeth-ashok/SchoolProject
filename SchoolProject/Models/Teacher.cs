@@ -17,6 +17,7 @@ namespace SchoolProject.Models
         public IEnumerable<ClassNamesID> classList;
     }
 
+    // class that contains class id and class name 
     public class ClassNamesID
     {
         public int classId;

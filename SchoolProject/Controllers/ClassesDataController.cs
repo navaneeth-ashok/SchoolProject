@@ -13,12 +13,14 @@ namespace SchoolProject.Controllers
     {
         // DB class for accessing the DB
         private SchoolDBContext School = new SchoolDBContext();
+
         /// <summary>
-        /// Returns a student's detail from the DB
+        /// A function to display detailed information regarding a particular class
         /// </summary>
-        /// <param name="id">student's ID in the DB</param>
-        /// <returns>student object</returns>
+        /// <param name="id">An integer representing the PKEY in the DB</param>
+        /// <returns>A Classes object with details fetched from DB</returns>
         [HttpGet]
+        [Route("api/ClassesData/FindClass/{id}")]
         public Classes FindClass(int id)
         {
             // Creating connection to access DB
@@ -53,15 +55,11 @@ namespace SchoolProject.Controllers
         }
 
         /// <summary>
-        /// This is a filter to apply on the list of teachers
+        /// A function to filter and list all the classes that follows certain constraints
+        /// set by the input
         /// </summary>
-        /// <param name="name">A substring of firstname and/or last name</param>
-        /// <param name="salaryLow">salary low point</param>
-        /// <param name="salaryHigh">salary high point</param>
-        /// <param name="hireDateLow">hiredate low point</param>
-        /// <param name="hireDateHigh">hiredate high point</param>
-        /// <param name="employeeNumber">an exact matching number</param>
-        /// <returns>A list of teachers who follows the conditions passed</returns>
+        /// <param name="searchClass">A classes object which contains few fields on which filtering needs to be done</param>
+        /// <returns>A list of classes object with details fetched from DB</returns>
         [HttpPost]
         [Route("api/ClassesData/FilterClasses/{searchClass}")]
         public IEnumerable<Classes> FilterClasses(Classes searchClass)
@@ -97,7 +95,7 @@ namespace SchoolProject.Controllers
 
             // Storing the result of query execution into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();
-            // empty list of type Teacher
+            // empty list of type Classes
             List<Classes> ClassesDetails = new List<Classes> { };
 
 
@@ -116,13 +114,13 @@ namespace SchoolProject.Controllers
                     employeeNumber = Convert.ToString(ResultSet["employeenumber"])
                 };
 
-                // Adding teacher object into a list
+                // Adding classes object into a list
                 ClassesDetails.Add(NewClass);
             }
 
             // Close the connection
             Conn.Close();
-            // Return the list of teacher objects
+            // Return the list of classes objects
             return ClassesDetails;
         }
     }

@@ -84,6 +84,7 @@ namespace SchoolProject.Controllers
         /// <param name="id">Teacher's ID in the DB</param>
         /// <returns>Teacher object</returns>
         [HttpGet]
+        [Route("api/TeacherData/FindTeacher/{id}")]
         public Teacher FindTeacher(int id)
         {
             // Creating connection to access DB
@@ -203,7 +204,11 @@ namespace SchoolProject.Controllers
             return TeacherDetails;
         }
 
-        
+        /// <summary>
+        /// A function to retrieve the list of classes taken by a teacher
+        /// </summary>
+        /// <param name="teacherID">Teacher ID as mentioned in DB</param>
+        /// <returns>A list of type ClassNamesID</returns>
         [HttpGet]
         [Route("api/TeacherData/RetrieveClasslist/{teacherID}")]
         public IEnumerable<ClassNamesID> RetrieveClasslist(int teacherID)
@@ -225,7 +230,7 @@ namespace SchoolProject.Controllers
 
             // Storing the result of query execution into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();
-            // empty list of type int
+            // empty list of type ClassNamesID
             List<ClassNamesID> ClassDetails = new List<ClassNamesID> { };
 
 
@@ -248,7 +253,7 @@ namespace SchoolProject.Controllers
 
             // Close the connection
             Conn.Close();
-            // Return the list of class ids
+            // Return the list of classes object
             return ClassDetails;
 
         }
