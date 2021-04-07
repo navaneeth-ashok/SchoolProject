@@ -1,0 +1,43 @@
+﻿@model IEnumerable<SchoolProject.Models.Student>
+
+@{
+    ViewBag.Title = "Students";
+}
+
+<div id="containerlist">
+    <h2>Students</h2>
+    <form action="/Student/Filter" method="post">
+        <div id="name-div">
+            <label for="tName">Student Name:</label>
+            <input type="text" id="tName" name="name" placeholder="Enter name" />
+            <input type="submit" value="Search" class="Submit" />
+        </div>
+        <div class="flex-container">
+            <div id="column1" class="filter-column">
+                <input type="button" onclick="toggle_fields('enrolling_div');" value="Filter by date of enrolment" class="filter-toggle" id="enrolling_btn" />
+                <div id="enrolling_div" class="collapsible-div">
+                    <div>
+                        <label for="enrolDateLow">From:</label>
+                        <input type="text" id="tenrolDateLow" name="enrolDateLow" placeholder="1900-01-01" value="1900-01-01" />
+                    </div>
+                    <div>
+                        <label for="enrolDateHigh">To:</label>
+                        <input type="text" id="tenrolDateHigh" name="enrolDateHigh" placeholder="2022-01-01" value="2022-01-01" />
+                    </div>
+                </div>
+            </div>
+            <div id="column2" class="filter-column">
+                <input type="button" onclick="toggle_fields('studentno_div');" value="Filter by student number" class="filter-toggle" id="studentno_btn" />
+                <div id="studentno_div" class="collapsible-div">
+                    <label for="tstudentNumber">Number:</label>
+                    <input type="text" id="tstudentNumber" name="studentInpNumber" placeholder="N0000" />
+                </div>
+            </div>
+        </div>
+    </form>
+    @foreach (var student in Model)
+    {<div class="listitem row">
+            <div class="filter_list"><a href="/Student/Show/@student.studentId">@student.studentFname @student.studentLname</a></div>
+        </div>
+    }
+</div>

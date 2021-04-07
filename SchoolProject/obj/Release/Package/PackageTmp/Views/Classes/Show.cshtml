@@ -1,0 +1,16 @@
+﻿@model SchoolProject.Models.Classes
+@{
+    ViewBag.Title = @Model.classname + " Details";
+}
+
+<h2>@Model.classname</h2>
+<a class="navlink" href="/Classes/Filter">Back To Class</a>
+
+<div class="detailed-list">
+    <div>ID: @Model.classId</div>
+    <div>Name: @Model.classname</div>
+    <div>Teacher: <a href="/Teacher/Show/@Model.teacherId" class="detailed-link">@Model.teacherName</a></div>
+    <div>Teacher Number: @Model.employeeNumber</div>
+    <div>Start Date: @Model.startdate.ToString("d")</div>
+    <div>Finish Date: @Model.finishdate.ToString("d")</div>
+</div>

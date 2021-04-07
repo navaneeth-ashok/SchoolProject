@@ -1,0 +1,59 @@
+﻿@model IEnumerable<SchoolProject.Models.Classes>
+
+@{
+    ViewBag.Title = "Classes";
+}
+
+<div id="containerlist">
+    <h2>Classes</h2>
+    <form action="/Classes/Filter" method="post">
+        <div id="name-div">
+            <label for="tName">Class Name:</label>
+            <input type="text" id="tName" name="class_name" placeholder="Enter class name" />
+            <input type="submit" value="Search" class="Submit" />
+        </div>
+        <div class="flex-container">
+
+            <div id="column1" class="filter-column">
+                <input type="button" onclick="toggle_fields('duration_div');" value="Filter by date" class="filter-toggle" id="duration_btn" />
+                <div id="duration_div" class="collapsible-div">
+                    <div>
+                        <label for="durationDateLow">From:</label>
+                        <input type="text" id="tdurationDateLow" name="date_start" placeholder="1900-01-01" value="1900-01-01" />
+                    </div>
+                    <div>
+                        <label for="durationDateHigh">To:</label>
+                        <input type="text" id="tdurationDateHigh" name="date_end" placeholder="2200-01-01" value="2200-01-01" />
+                    </div>
+                </div>
+            </div>
+            <div id="column2" class="filter-column">
+                <input type="button" onclick="toggle_fields('classcode_div');" value="Filter by class code" class="filter-toggle" id="class_btn" />
+                <div id="classcode_div" class="collapsible-div">
+                    <label for="tclassCodeNumber">Class Code:</label>
+                    <input type="text" id="tclassCodeNumber" name="class_code" placeholder="http5101" />
+                </div>
+            </div>
+            <div id="column3" class="filter-column">
+                <input type="button" onclick="toggle_fields('employeeName_div');" value="Filter by employee name" class="filter-toggle" id="employeeName_btn" />
+                <div id="employeeName_div" class="collapsible-div">
+                    <label for="temployeeName">Teacher Name:</label>
+                    <input type="text" id="temployeeName" name="teacher_name" placeholder="John Doe" />
+                </div>
+            </div>
+            <div id="column4" class="filter-column">
+                <input type="button" onclick="toggle_fields('employeeno_div');" value="Filter by employee number" class="filter-toggle" id="employee_btn" />
+                <div id="employeeno_div" class="collapsible-div">
+                    <label for="temployeeNumber">Number:</label>
+                    <input type="text" id="temployeeNumber" name="employee_number" placeholder="T000" />
+                </div>
+            </div>
+        </div>
+    </form>
+    @foreach (var classes in Model)
+    {
+        <div class="listitem row">
+            <div class="filter_list"><a href="/Classes/Show/@classes.classId">@classes.classname</a></div>
+        </div>
+    }
+</div>
