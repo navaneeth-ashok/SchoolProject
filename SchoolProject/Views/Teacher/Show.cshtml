@@ -1,24 +1,31 @@
-﻿@model SchoolProject.Models.Teacher
+﻿@model SchoolProject.Models.ViewModels.TeacherClass
+
 @{
-    ViewBag.Title = @Model.employeeNumber + ":" + @Model.teacherFname + @Model.teacherLname + " Details";
+    ViewBag.Title = @Model.teacher.employeeNumber + ":" + @Model.teacher.teacherFname + @Model.teacher.teacherLname + " Details";
 }
 
-<h2>@Model.teacherFname @Model.teacherLname</h2>
+<h2>@Model.teacher.teacherFname @Model.teacher.teacherLname</h2>
 <a class="navlink" href="/Teacher/Filter">Back To Teachers</a>
 
 <div class="detailed-list">
-    <div>ID: @Model.teacherId</div>
-    <div>First Name: @Model.teacherFname</div>
-    <div>Last Name: @Model.teacherLname</div>
-    <div>Employee Number: @Model.employeeNumber</div>
-    <div>Date of Hiring: @Model.hireDate.ToString("d")</div>
-    <div>Salary: @Model.salary $</div>
+    <div>ID: @Model.teacher.teacherId</div>
+    <div>First Name: @Model.teacher.teacherFname</div>
+    <div>Last Name: @Model.teacher.teacherLname</div>
+    <div>Employee Number: @Model.teacher.employeeNumber</div>
+    <div>Date of Hiring: @Model.teacher.hireDate.ToString("d")</div>
+    <div>Salary: @Model.teacher.salary $</div>
     <div></div>
     <div style="text-decoration:underline;font-size:1.2em">Courses taken by the faculty</div>
+
     <ul style="list-style:none">
-        @foreach (var class_ids in @Model.classList)
+        @if (@Model.classes.Count() == 0)
         {
-            <li class="listOfClasses"><a href="/Classes/Show/@class_ids.classId">@class_ids.className</a></li>
+            <li style="font-style:italic">This faculty is not teaching any course now</li>
+        }
+
+        @foreach (var class_ids in @Model.classes)
+        {
+            <li class="listOfClasses"><a href="/Classes/Show/@class_ids.classId">@class_ids.classname</a></li>
         }
     </ul>
 </div>

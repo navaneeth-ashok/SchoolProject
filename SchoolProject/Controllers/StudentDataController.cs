@@ -19,11 +19,11 @@ namespace SchoolProject.Controllers
         /// </summary>
         /// <param name="searchKey">Parameter for filtering the result</param>
         /// <returns>
-        /// A list of student objects
+        /// A list of student objects on the basis of the ID passed
         /// </returns>
         [HttpGet]
-        [Route("api/StudentData/ListStudents/{searchKey?}")]
-        public IEnumerable<Student> ListStudents(string searchKey = null)
+        [Route("api/StudentData/ListStudents/{searchKey}")]
+        public IEnumerable<Student> ListStudents(string searchKey)
         {
             // Creating instance of the connection
             MySqlConnection Conn = School.AccessDatabase();
@@ -32,14 +32,24 @@ namespace SchoolProject.Controllers
             // New command for query
             MySqlCommand cmd = Conn.CreateCommand();
 
-            // SQL query for filtering
-            cmd.CommandText = "Select * from students where lower(studentfname) like lower(@key) or" +
-                " lower(studentlname) like lower(@key) or" +
-                " lower(CONCAT(studentfname, ' ',studentlname)) like lower(@key) or " +
-                "lower(studentnumber) like lower(@key);";
+            // Sanitising input parameters
+            int index = 1;
+            string strAppend = "";
+            String[] strArrayIDs;
+            string strNames = searchKey;
+            strArrayIDs = strNames.Split(',');
+            string paramName = "";
+            foreach (String item in strArrayIDs)
+            {
+                paramName = "@idParam" + index;
+                cmd.Parameters.AddWithValue(paramName, item); //Making individual parameters for every name  
+                strAppend += paramName + ",";
+                index += 1;
+            }
+            strAppend = strAppend.ToString().Remove(strAppend.LastIndexOf(","), 1); //Remove the last comma  
 
-            // Sanitizing the query to prevent SQL injection
-            cmd.Parameters.AddWithValue("@key", "%" + searchKey + "%");
+            // SQL query for filtering, appended with the parameterized values
+            cmd.CommandText = "Select * from students where studentid IN (" + strAppend +")";
             cmd.Prepare();
 
             // Storing the result of query execution into a variable
@@ -127,7 +137,7 @@ namespace SchoolProject.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/StudentData/FilterStudents/{name?}/{enrolDateLow?}/{enrolDateHigh?}/{studentNumber?}")]
-        public IEnumerable<Student> FilterStudents(string name = null, string enrolDateLow = null, string enrolDateHigh = null, string studentInpNumber = null)
+        public IEnumerable<Student> FilterStudents(string name = null, string enrolDateLow = null, string enrolDateHigh = null, string studentInpNumber = null, string studentIDs = null)
         {
             // setting default values
             if (enrolDateLow == null) { enrolDateLow = "1900-01-01T00:00:00"; }  
@@ -138,20 +148,47 @@ namespace SchoolProject.Controllers
             Conn.Open();
             // New command for query
             MySqlCommand cmd = Conn.CreateCommand();
+            
+            // a function to retrieve the list of students with IDs in the input string studentID, for all other filtering
+            // use the func mentioned in the else statement
+            if (studentIDs != null)
+            {
+                int index = 1;
+                string strAppend = "";
+                String[] strArrayIDs;
+                string strNames = studentIDs;
+                strArrayIDs = strNames.Split(',');
+                string paramName = "";
+                foreach (String item in strArrayIDs)
+                {
+                    paramName = "@idParam" + index;
+                    cmd.Parameters.AddWithValue(paramName, item); //Making individual parameters for every name  
+                    strAppend += paramName + ",";
+                    index += 1;
+                }
+                strAppend = strAppend.ToString().Remove(strAppend.LastIndexOf(","), 1); //Remove the last comma  
 
-            // SQL query for filtering
-            cmd.CommandText = "Select * from students where" +
-                "(lower(studentfname) like lower(@nameKey) OR " +
-                "lower(studentlname) like lower(@nameKey) OR " +
-                "lower(CONCAT(studentfname, ' ',studentlname)) like lower(@nameKey)) AND  " +
-                "lower(studentnumber) like lower(@studentNumberKey) AND " +
-                "(enroldate > @enrolDateLowKey AND enroldate < @enrolDateHighKey);";
+                // SQL query for filtering, appended with the parameterized values
+                cmd.CommandText = "Select * from students where studentid IN (" + strAppend + ")";
+            } else
+            {
+                // SQL query for filtering
+                cmd.CommandText = "Select * from students where" +
+                    "(lower(studentfname) like lower(@nameKey) OR " +
+                    "lower(studentlname) like lower(@nameKey) OR " +
+                    "lower(CONCAT(studentfname, ' ',studentlname)) like lower(@nameKey)) AND  " +
+                    "lower(studentnumber) like lower(@studentNumberKey) AND " +
+                    "(enroldate > @enrolDateLowKey AND enroldate < @enrolDateHighKey);";
 
-            // Sanitizing the query to prevent SQL injection
-            cmd.Parameters.AddWithValue("@nameKey", "%" + name + "%");
-            cmd.Parameters.AddWithValue("@studentNumberKey", "%" + studentInpNumber + "%");
-            cmd.Parameters.AddWithValue("@enrolDateLowKey", enrolDateLow);
-            cmd.Parameters.AddWithValue("@enrolDateHighKey", enrolDateHigh);
+                // Sanitizing the query to prevent SQL injection
+                cmd.Parameters.AddWithValue("@nameKey", "%" + name + "%");
+                cmd.Parameters.AddWithValue("@studentNumberKey", "%" + studentInpNumber + "%");
+                cmd.Parameters.AddWithValue("@enrolDateLowKey", enrolDateLow);
+                cmd.Parameters.AddWithValue("@enrolDateHighKey", enrolDateHigh);
+
+            }
+
+            
             cmd.Prepare();
 
             // Storing the result of query execution into a variable
@@ -187,5 +224,6 @@ namespace SchoolProject.Controllers
             // Return the list of student objects
             return StudentDetails;
         }
+
     }
 }

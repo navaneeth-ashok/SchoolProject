@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SchoolProject.Models;
+using SchoolProject.Models.ViewModels;
 
 namespace SchoolProject.Controllers
 {
@@ -16,6 +17,7 @@ namespace SchoolProject.Controllers
         }
 
         // GET: Teacher/List
+        // Deprecated method : Please use Filter
         public ActionResult List(string searchKey=null)
         {
             TeacherDataController controller = new TeacherDataController();
@@ -24,14 +26,26 @@ namespace SchoolProject.Controllers
         }
 
         // GET: Teacher/Show/{id}
-        // Deprecated method : Please use Filter
         public ActionResult Show(int id)
         {
             TeacherDataController controller = new TeacherDataController();
             Teacher newTeacher = controller.FindTeacher(id);
 
+            Classes NewSearchClass = new Classes
+            {
+                employeeNumber = Convert.ToString(newTeacher.employeeNumber)
+            };
 
-            return View(newTeacher);
+            ClassesDataController class_controller = new ClassesDataController();
+            IEnumerable<Classes> filterClasses = class_controller.FilterClasses(NewSearchClass);
+
+            TeacherClass newTeacherClass = new TeacherClass
+            {
+                classes = filterClasses,
+                teacher = newTeacher
+            };
+
+            return View(newTeacherClass);
         }
 
         // POST: Teacher/Filter/{}

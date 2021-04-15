@@ -41,7 +41,7 @@ namespace SchoolProject.Controllers
 
             while (ResultSet.Read())
             {
-                NewClass.classId = Convert.ToInt32(ResultSet["classid"]);
+                NewClass.classId = Convert.ToString(ResultSet["classid"]);
                 NewClass.classCode = Convert.ToString(ResultSet["classcode"]);
                 NewClass.teacherId = Convert.ToInt32(ResultSet["teacherid"]);
                 NewClass.startdate = DateTime.Parse(Convert.ToString(ResultSet["startdate"]));
@@ -61,7 +61,7 @@ namespace SchoolProject.Controllers
         /// <param name="searchClass">A classes object which contains few fields on which filtering needs to be done</param>
         /// <returns>A list of classes object with details fetched from DB</returns>
         [HttpPost]
-        [Route("api/ClassesData/FilterClasses/{searchClass}")]
+        [Route("api/ClassesData/FilterClasses/")]
         public IEnumerable<Classes> FilterClasses(Classes searchClass)
         {
             // setting default values
@@ -74,23 +74,50 @@ namespace SchoolProject.Controllers
             // New command for query
             MySqlCommand cmd = Conn.CreateCommand();
 
-            // SQL query for filtering
-            cmd.CommandText = "SELECT * FROM classes  left outer join teachers on classes.teacherid = teachers.teacherid  where" +
-                " lower(classcode) like lower(@classCodeKey) AND " +
-                " (lower(teachers.teacherfname) like lower(@teacherNameKey) or" +
-                " lower(teachers.teacherlname) like lower(@teacherNameKey) or" +
-                " lower(CONCAT(teachers.teacherfname, ' ',teachers.teacherlname)) like lower(@teacherNameKey)) AND "+
-                " lower(teachers.employeenumber) like lower(@teacherNumberKey) AND " +
-                " lower(classes.classname) like lower(@classNameKey) AND " +
-                " (startdate > @startDateKey AND finishdate < @finishDateKey);";
+            if (searchClass.classId != null)
+            {
+                // function used only for finding all the classes taken by a student
+                // filtering by the classid is not provided as it doesn't make sense
+                // for filtering by classid please use filtering by classcode like HTTP5101
+                int index = 1;
+                string strAppend = "";
+                String[] strArrayIDs;
+                string strNames = searchClass.classId;
+                strArrayIDs = strNames.Split(',');
+                string paramName;
+                foreach (String item in strArrayIDs)
+                {
+                    paramName = "@idParam" + index;
+                    cmd.Parameters.AddWithValue(paramName, item); //Making individual parameters for every ID  
+                    strAppend += paramName + ",";
+                    index += 1;
+                }
+                strAppend = strAppend.ToString().Remove(strAppend.LastIndexOf(","), 1); //Remove the last comma  
 
-            // Sanitizing the query to prevent SQL injection
-            cmd.Parameters.AddWithValue("@classCodeKey", "%" + searchClass.classCode + "%");
-            cmd.Parameters.AddWithValue("@teacherNameKey", "%" + searchClass.teacherName + "%");
-            cmd.Parameters.AddWithValue("@teacherNumberKey", "%" + searchClass.employeeNumber + "%");
-            cmd.Parameters.AddWithValue("@classNameKey", "%" + searchClass.classname + "%");
-            cmd.Parameters.AddWithValue("@startDateKey", searchClass.startdate);
-            cmd.Parameters.AddWithValue("@finishDateKey", searchClass.finishdate);
+                // SQL query for filtering, appended with the parameterized values
+                cmd.CommandText = "SELECT * FROM classes  left outer join teachers on classes.teacherid = teachers.teacherid WHERE classid IN (" + strAppend + ")";
+            } else
+            {
+                // SQL query for normal filtering
+                cmd.CommandText = "SELECT * FROM classes  left outer join teachers on classes.teacherid = teachers.teacherid  where" +
+                    " lower(classcode) like lower(@classCodeKey) AND " +
+                    " (lower(teachers.teacherfname) like lower(@teacherNameKey) or" +
+                    " lower(teachers.teacherlname) like lower(@teacherNameKey) or" +
+                    " lower(CONCAT(teachers.teacherfname, ' ',teachers.teacherlname)) like lower(@teacherNameKey)) AND " +
+                    " lower(teachers.employeenumber) like lower(@teacherNumberKey) AND " +
+                    " lower(classes.classname) like lower(@classNameKey) AND " +
+                    " (startdate > @startDateKey AND finishdate < @finishDateKey);";
+
+
+                // Sanitizing the query to prevent SQL injection
+                cmd.Parameters.AddWithValue("@classCodeKey", "%" + searchClass.classCode + "%");
+                cmd.Parameters.AddWithValue("@teacherNameKey", "%" + searchClass.teacherName + "%");
+                cmd.Parameters.AddWithValue("@teacherNumberKey", "%" + searchClass.employeeNumber + "%");
+                cmd.Parameters.AddWithValue("@classNameKey", "%" + searchClass.classname + "%");
+                cmd.Parameters.AddWithValue("@startDateKey", searchClass.startdate);
+                cmd.Parameters.AddWithValue("@finishDateKey", searchClass.finishdate);
+
+            }
             cmd.Prepare();
 
             // Storing the result of query execution into a variable
@@ -104,7 +131,7 @@ namespace SchoolProject.Controllers
             {
                 Classes NewClass = new Classes
                 {
-                    classId = Convert.ToInt32(ResultSet["classid"]),
+                    classId = Convert.ToString(ResultSet["classid"]),
                     classCode = Convert.ToString(ResultSet["classcode"]),
                     teacherId = Convert.ToInt32(ResultSet["teacherid"]),
                     startdate = DateTime.Parse(Convert.ToString(ResultSet["startdate"])),

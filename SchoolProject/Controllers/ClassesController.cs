@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SchoolProject.Models;
+using SchoolProject.Models.ViewModels;
 
 namespace SchoolProject.Controllers
 {
@@ -22,7 +23,33 @@ namespace SchoolProject.Controllers
         {
             ClassesDataController controller = new ClassesDataController();
             Classes newClass = controller.FindClass(id);
-            return View(newClass);
+
+            StuXCla filterClass = new StuXCla
+            {
+                class_id = id
+            };
+
+            StudentXClassesDataController studentxclass_controller = new StudentXClassesDataController();
+            IEnumerable<StuXCla> listofStuXClass = studentxclass_controller.ListClassesOfStudent(filterClass);
+
+            List<Student> listofStudentsTakingAClass = new List<Student> { };
+            StudentDataController student_controller = new StudentDataController();
+            string StringOfStudentIDs = "";
+            
+            foreach (var StuXIns in listofStuXClass)
+            {
+                StringOfStudentIDs += StuXIns.student_id + ",";
+            }
+
+            IEnumerable<Student> ListOfStudentsInAClass = student_controller.FilterStudents(null,null,null,null,StringOfStudentIDs);
+
+            ClassAndTheirStudents studentclass = new ClassAndTheirStudents
+            {
+                classes = newClass,
+                students = ListOfStudentsInAClass
+            };
+
+            return View(studentclass);
         }
 
         //POST: Classes/Filter/{}
@@ -36,7 +63,7 @@ namespace SchoolProject.Controllers
 
             Classes NewSearchClass = new Classes
             {
-                classId = Convert.ToInt32(class_id),
+                classId = Convert.ToString(class_id),
                 classCode = Convert.ToString(class_code),
                 teacherId = Convert.ToInt32(teacher_id),
                 startdate = DateTime.Parse(date_start),
@@ -47,8 +74,8 @@ namespace SchoolProject.Controllers
             };
 
             ClassesDataController controller = new ClassesDataController();
-            IEnumerable<Classes> filterStudents = controller.FilterClasses(NewSearchClass);
-            return View(filterStudents);
+            IEnumerable<Classes> filterClasses = controller.FilterClasses(NewSearchClass);
+            return View(filterClasses);
         }
     }
 }

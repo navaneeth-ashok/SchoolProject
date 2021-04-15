@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SchoolProject.Models;
+using SchoolProject.Models.ViewModels;
 
 namespace SchoolProject.Controllers
 {
@@ -29,7 +30,37 @@ namespace SchoolProject.Controllers
         {
             StudentDataController controller = new StudentDataController();
             Student newStudent = controller.FindStudent(id);
-            return View(newStudent);
+
+            StuXCla filterClass = new StuXCla
+            {
+                student_id = id
+            };
+
+            StudentXClassesDataController studentxclass_controller = new StudentXClassesDataController();
+            IEnumerable<StuXCla> listofStuXClass = studentxclass_controller.ListClassesOfStudent(filterClass);
+
+            List<Classes> listofClassesStudentIsTaking = new List<Classes> { };
+            ClassesDataController class_controller = new ClassesDataController();
+            string StringOfClassIDs = "";
+            foreach(var StuXIns in listofStuXClass)
+            {
+                StringOfClassIDs += StuXIns.class_id + ",";
+            }
+
+            Classes listClass = new Classes
+            {
+                classId = StringOfClassIDs
+            };
+
+            IEnumerable<Classes> ListOfClassesTakenByAStudent = class_controller.FilterClasses(listClass);
+
+            StudentAndTheirClasses studentclass = new StudentAndTheirClasses
+            {
+                student = newStudent,
+                classes = ListOfClassesTakenByAStudent
+            };
+
+            return View(studentclass);
         }
 
         // POST: Student/Filter/{}
