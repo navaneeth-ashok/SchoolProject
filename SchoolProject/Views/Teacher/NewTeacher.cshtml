@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "Create a new teacher";
+}
+
+<h2>Create a new teacher record</h2>
+<form method="post" action="/Teacher/CreateTeacher" class="pure-form pure-form-aligned" onsubmit="return validateNewTeacher();">
+    <fieldset>
+        <div class="pure-control-group">
+            <label for="teacherfname">Teacher First Name:</label>
+            <input type="text" id="teacherfname" name="teacherFName" />
+        </div>
+        <div class="pure-control-group">
+            <label for="teacherlname">Teacher Last Name:</label>
+            <input type="text" id="teacherlname" name="teacherLName" />
+        </div>
+        <div class="pure-control-group">
+            <label for="emplnumber">Employee Number:</label>
+            <input type="text" id="emplnumber" name="empNumber" />
+        </div>
+        <div class="pure-control-group">
+            <label for="hiredate">HireDate:</label>
+            <input type="text" id="hiredate" name="hireDate" value="@DateTime.Now" />
+        </div>
+        <div class="pure-control-group">
+            <label for="salary">Salary:</label>
+            <input type="text" id="salary" name="salary" value="0"/>
+        </div>
+        <div class="pure-control-group">
+            <p id="formErrorNewTeacher" style="font-weight:lighter;color:red;"></p>
+        </div>
+        <div class="pure-controls">
+            <button type="submit" class="create-form submit-btn">Create</button>
+            <a href="/Teacher/Filter" class="create-form cancel-button">Cancel</a>
+        </div>
+    </fieldset>
+</form>
+
+@*Client side validation*@
+<script>
+    function validateNewTeacher() {
+        var fname = document.getElementById("teacherfname");
+        var lname = document.getElementById("teacherlname");
+        var eno = document.getElementById("emplnumber");
+        var errorMsg = document.getElementById("formErrorNewTeacher");
+        fname.style.border = "1px solid #8ecae6";
+        lname.style.border = "1px solid #8ecae6";
+        eno.style.border = "1px solid #8ecae6";
+        console.log(fname.value);
+        if (fname.value == null || fname.value == "") {
+            fname.style.border = "1px solid red";
+            fname.focus();
+            errorMsg.innerHTML = "Firstname is missing!";
+            return false;
+        } else if (lname.value == null || lname.value == "") {
+            fname.style.border = "1px solid #8ecae6";
+            lname.style.border = "1px solid red";
+            lname.focus();
+            errorMsg.innerHTML = "Lastname is missing!";
+            return false;
+        } else if (eno.value == null || eno.value == "") {
+            eno.style.border = "1px solid red";
+            eno.focus();
+            errorMsg.innerHTML = "Employee number is missing!"
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
+

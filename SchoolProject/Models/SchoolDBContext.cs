@@ -8,10 +8,10 @@ namespace SchoolProject.Models
 {
     public class SchoolDBContext
     {
-        private static string User { get { return "monitor"; } }
-        private static string Password { get { return "r3adU$erp4d"; } }
+        private static string User { get { return "root"; } }
+        private static string Password { get { return "root"; } }
         private static string Database { get { return "schooldb"; } }
-        private static string Server { get { return "schooldb-1.cfuaabilmpd2.us-east-2.rds.amazonaws.com"; } }
+        private static string Server { get { return "localhost"; } }
         private static string Port { get { return "3306"; } }
 
 

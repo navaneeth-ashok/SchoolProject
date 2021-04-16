@@ -1,0 +1,15 @@
+﻿@model SchoolProject.Models.Teacher
+@{
+    ViewBag.Title = "Delete " + @Model.teacherFname + " ?";
+}
+
+<h2>Delete @Model.teacherFname @Model.teacherLname ?</h2>
+<p>Are you sure you want to <span style="color:red;text-transform:uppercase">delete</span> this record?</p>
+<p>Once this is done, the record will be deleted permanently.</p>
+<p>Click <span style="color:red">Yes</span> to delete the record, or <span style="color:forestgreen">Cancel</span> to discard.</p>
+<form method="POST" action="/Teacher/DeleteTeacher/@Model.teacherId">
+    <button class="show-btn-op delete-btn">Yes</button>
+    <a href="/Teacher/Show/@Model.teacherId" class="show-btn-op cancel-button">Cancel</a>
+</form>
+
+

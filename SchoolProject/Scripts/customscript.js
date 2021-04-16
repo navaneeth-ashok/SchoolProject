@@ -20,3 +20,4 @@ function toggle_fields(id) {
         ele.style.display = "none";
     }
 }
+

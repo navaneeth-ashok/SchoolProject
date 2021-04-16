@@ -1,0 +1,36 @@
+﻿@model SchoolProject.Models.Teacher
+@{
+    ViewBag.Title = "Update " + @Model.teacherFname + " " + @Model.teacherLname;
+}
+
+<h2>Update teacher record : @Model.teacherFname @Model.teacherLname</h2>
+<form method="post" action="/Teacher/CreateTeacher" class="pure-form pure-form-aligned">
+    <fieldset>
+        <div class="pure-control-group">
+            <label for="teacherfname">Teacher First Name:</label>
+            <input type="text" id="teacherfname" name="teacherFName" value="@Model.teacherFname" />
+        </div>
+        <div class="pure-control-group">
+            <label for="teacherlname">Teacher Last Name:</label>
+            <input type="text" id="teacherlname" name="teacherLName" value="@Model.teacherLname" />
+        </div>
+        <div class="pure-control-group">
+            <label for="emplnumber">Employee Number:</label>
+            <input type="text" id="emplnumber" name="empNumber" value="@Model.employeeNumber" />
+        </div>
+        <div class="pure-control-group">
+            <label for="hiredate">HireDate:</label>
+            <input type="text" id="hiredate" name="hireDate" value="@Model.hireDate" />
+        </div>
+        <div class="pure-control-group">
+            <label for="salary">Salary:</label>
+            <input type="text" id="salary" name="salary" value="@Model.salary" />
+        </div>
+        <input type="hidden" id="teacherId" name="teacherid" value="@Model.teacherId">
+        <div class="pure-controls">
+            <button class="create-form submit-btn">Update</button>
+            <a href="/Teacher/Show/@Model.teacherId" class="create-form cancel-button">Cancel</a>
+        </div>
+    </fieldset>
+</form>
+

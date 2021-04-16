@@ -257,6 +257,71 @@ namespace SchoolProject.Controllers
             return ClassDetails;
 
         }
+
+        /// <summary>
+        /// Function to Delete a teacher
+        /// </summary>
+        /// <param name="id">id of the teacher to delete</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/TeacherData/DeleteTeacher/{id}")]
+        public int DeleteTeacher(int id)
+        {
+            // Creating connection to access DB
+            MySqlConnection Conn = School.AccessDatabase();
+            // Opening connection
+            Conn.Open();
+            // Creating a command for sending query
+            MySqlCommand cmd = Conn.CreateCommand();
+            // SQL query for deleting a teacher's info
+            cmd.CommandText = "DELETE from teachers where teacherid=@key";
+            // Sanitizing the query to prevent SQL injection
+            cmd.Parameters.AddWithValue("@key", id);
+            cmd.Prepare();
+            // Storing result into a variable
+            cmd.ExecuteNonQuery();
+            return 0;
+        }
+
+        /// <summary>
+        /// A function to create a new teacher or update a teacher's detail
+        /// </summary>
+        /// <param name="teacherObj">Teacher OBJ refer the Models</param>
+        /// <param name="operation">INSERT/UPDATE</param>
+        [HttpPost]
+        [Route("api/TeacherData/CreateTeacher/")]
+        public void CreateTeacher(Teacher teacherObj, string operation)
+        {
+            // Creating connection to access DB
+            MySqlConnection Conn = School.AccessDatabase();
+            // Opening connection
+            Conn.Open();
+            // Creating a command for sending query
+            MySqlCommand cmd = Conn.CreateCommand();
+            // SQL query for inserting teacher info
+
+            if (operation.ToLower() == "insert")
+            {
+                cmd.CommandText = "INSERT INTO TEACHERS(teacherfname, teacherlname, employeenumber, hiredate, salary) " +
+                " VALUES (@fnamekey, @lnamekey, @empkey, @hirekey, @salarykey)";
+            } else if ( operation.ToLower() == "update")
+            {
+                cmd.CommandText = "UPDATE TEACHERS SET teacherfname=@fnamekey, teacherlname=@lnamekey, employeenumber=@empkey, hiredate=@hirekey, salary=@salarykey " +
+                    " where teacherid=@idkey";
+            }            
+            // Sanitizing the query to prevent SQL injection
+            cmd.Parameters.AddWithValue("@fnamekey", teacherObj.teacherFname);
+            cmd.Parameters.AddWithValue("@lnamekey", teacherObj.teacherLname);
+            cmd.Parameters.AddWithValue("@empkey", teacherObj.employeeNumber);
+            cmd.Parameters.AddWithValue("@hirekey", teacherObj.hireDate);
+            cmd.Parameters.AddWithValue("@salarykey", teacherObj.salary);
+            cmd.Parameters.AddWithValue("@idkey", teacherObj.teacherId);
+
+            cmd.Prepare();
+            // Executing the Query
+            cmd.ExecuteNonQuery();
+        }
+
     }
 
 }

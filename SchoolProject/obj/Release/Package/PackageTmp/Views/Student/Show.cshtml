@@ -1,15 +1,28 @@
-﻿@model SchoolProject.Models.Student
+﻿@model SchoolProject.Models.ViewModels.StudentAndTheirClasses
 @{
-    ViewBag.Title = @Model.studentNumber + ":" + @Model.studentFname + @Model.studentLname + " Details";
+    ViewBag.Title = @Model.student.studentNumber + ":" + @Model.student.studentFname + @Model.student.studentLname + " Details";
 }
 
-<h2>@Model.studentFname @Model.studentLname</h2>
+<h2>@Model.student.studentFname @Model.student.studentLname</h2>
 <a class="navlink" href="/Student/Filter">Back To Students</a>
 
 <div class="detailed-list">
-    <div>ID: @Model.studentId</div>
-    <div>First Name: @Model.studentFname</div>
-    <div>Last Name: @Model.studentLname</div>
-    <div>Student Number: @Model.studentNumber</div>
-    <div>Enrol Date: @Model.enrolDate.ToString("d")</div>
+    <div>ID: @Model.student.studentId</div>
+    <div>First Name: @Model.student.studentFname</div>
+    <div>Last Name: @Model.student.studentLname</div>
+    <div>Student Number: @Model.student.studentNumber</div>
+    <div>Enrol Date: @Model.student.enrolDate.ToString("d")</div>
+    <div style="text-decoration:underline;font-size:1.2em">Classes enrolled by the student</div>
+
+    <ul style="list-style:none">
+        @if(@Model.classes.Count() == 0)
+        {
+            <li style="font-style:italic">The student has not enrolled for any course</li>
+        }
+        
+        @foreach (var class_ids in @Model.classes)
+        {
+            <li class="listOfClasses"><a href="/Classes/Show/@class_ids.classId">@class_ids.classname</a></li>
+        }
+    </ul>
 </div>

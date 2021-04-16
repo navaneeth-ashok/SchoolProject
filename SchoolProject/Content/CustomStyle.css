@@ -14,6 +14,67 @@
     font-weight: bolder;
 }
 
+.show-btn-op{
+    border: none;
+    padding: 5px;
+    color: white;
+    background-color: red;
+    border-radius: 5px;
+}
+
+.delete-btn:hover {
+    font-weight: bolder;
+    background-color: #800000;
+}
+
+.show-btn-op.cancel-button {
+    padding-top: 6px;
+    padding-bottom: 7px;
+    color: white;
+    background-color: forestgreen;
+    margin-left: 15px;
+}
+
+.cancel-button:hover{
+    text-decoration: none;
+    font-weight: bolder;
+    background-color: darkgreen;
+}
+
+.delete-btn-logo {
+    filter: invert(21%) sepia(77%) saturate(6741%) hue-rotate(356deg) brightness(106%) contrast(120%);
+    position:relative;
+    top: 30px;
+    left: 120px;
+    float:right;
+}
+
+.delete-btn-logo:hover {
+    filter: invert(5%) sepia(78%) saturate(7251%) hue-rotate(359deg) brightness(108%) contrast(106%);
+}
+
+.edit-btn-logo {
+    filter: invert(44%) sepia(34%) saturate(5723%) hue-rotate(99deg) brightness(102%) contrast(97%);
+    position: relative;
+    top: 80px;
+    left: 170px;
+    float: right;
+}
+
+.edit-btn-logo:hover {
+    filter: invert(22%) sepia(46%) saturate(2875%) hue-rotate(105deg) brightness(89%) contrast(98%);
+}
+
+.add-btn-logo-person {
+    filter: invert(48%) sepia(99%) saturate(972%) hue-rotate(122deg) brightness(90%) contrast(97%);
+    padding-right: 40px;
+    float: right;
+}
+
+.add-btn-logo-person:hover{
+    filter: invert(31%) sepia(9%) saturate(6010%) hue-rotate(122deg) brightness(102%) contrast(98%);
+}
+
 #containerlist, #containershow {
     width: 100%;
     margin-top: 20px;
@@ -138,3 +199,29 @@ label {
     font-weight: bolder;
 }
 
+.create-form {
+    padding-top: 6px;
+    padding-bottom: 7px;
+    padding: 5px;
+    color: white;
+    background-color: darkseagreen;
+    margin-left: 15px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+}
+
+.create-form.submit-btn{
+    background-color: deepskyblue;
+}
+
+.create-form.cancel-button:hover{
+    background-color: darkgreen;
+    color: white;
+}
+
+.create-form.submit-btn:hover{
+    background-color: darkblue;
+    color: white;
+    font-weight: bolder;
+}

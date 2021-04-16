@@ -102,8 +102,8 @@ C:\Users\navaneeth\source\repos\SchoolProject\SchoolProject\bin\System.Web.WebPa
 C:\Users\navaneeth\source\repos\SchoolProject\SchoolProject\bin\System.Web.WebPages.Razor.xml
 C:\Users\navaneeth\source\repos\SchoolProject\SchoolProject\bin\Antlr3.Runtime.pdb
 C:\Users\navaneeth\source\repos\SchoolProject\SchoolProject\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\navaneeth\source\repos\SchoolProject\SchoolProject\obj\Debug\SchoolProject.csprojAssemblyReference.cache
 C:\Users\navaneeth\source\repos\SchoolProject\SchoolProject\obj\Debug\SchoolProject.csproj.CoreCompileInputs.cache
 C:\Users\navaneeth\source\repos\SchoolProject\SchoolProject\obj\Debug\SchoolProject.csproj.CopyComplete
 C:\Users\navaneeth\source\repos\SchoolProject\SchoolProject\obj\Debug\SchoolProject.dll
 C:\Users\navaneeth\source\repos\SchoolProject\SchoolProject\obj\Debug\SchoolProject.pdb
+C:\Users\navaneeth\source\repos\SchoolProject\SchoolProject\obj\Debug\SchoolProject.csprojAssemblyReference.cache

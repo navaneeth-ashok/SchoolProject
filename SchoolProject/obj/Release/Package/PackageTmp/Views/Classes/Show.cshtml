@@ -1,16 +1,29 @@
-﻿@model SchoolProject.Models.Classes
+﻿@model SchoolProject.Models.ViewModels.ClassAndTheirStudents
 @{
-    ViewBag.Title = @Model.classname + " Details";
+    ViewBag.Title = @Model.classes.classname + " Details";
 }
 
-<h2>@Model.classname</h2>
+<h2>@Model.classes.classname</h2>
 <a class="navlink" href="/Classes/Filter">Back To Class</a>
 
 <div class="detailed-list">
-    <div>ID: @Model.classId</div>
-    <div>Name: @Model.classname</div>
-    <div>Teacher: <a href="/Teacher/Show/@Model.teacherId" class="detailed-link">@Model.teacherName</a></div>
-    <div>Teacher Number: @Model.employeeNumber</div>
-    <div>Start Date: @Model.startdate.ToString("d")</div>
-    <div>Finish Date: @Model.finishdate.ToString("d")</div>
+    <div>ID: @Model.classes.classId</div>
+    <div>Name: @Model.classes.classname</div>
+    <div>Teacher: <a href="/Teacher/Show/@Model.classes.teacherId" class="detailed-link">@Model.classes.teacherName</a></div>
+    <div>Teacher Number: @Model.classes.employeeNumber</div>
+    <div>Start Date: @Model.classes.startdate.ToString("d")</div>
+    <div>Finish Date: @Model.classes.finishdate.ToString("d")</div>
+    <div style="text-decoration:underline;font-size:1.2em">Students enrolled under this course</div>
+
+    <ul style="list-style:none">
+        @if (@Model.students.Count() == 0)
+        {
+            <li style="font-style:italic">This class has no students yet</li>
+        }
+
+        @foreach (var students in @Model.students)
+        {
+            <li class="listOfClasses"><a href="/Student/Show/@students.studentId">@students.studentFname @students.studentLname</a></li>
+        }
+    </ul>
 </div>

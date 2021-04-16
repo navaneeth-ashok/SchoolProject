@@ -5,8 +5,13 @@
 }
 
 <h2>@Model.teacher.teacherFname @Model.teacher.teacherLname</h2>
-<a class="navlink" href="/Teacher/Filter">Back To Teachers</a>
 
+
+<div class="nav-operations">
+    <a class="navlink" href="/Teacher/Filter">Back To Teachers</a>
+    <a class="del_link" href="/Teacher/DeleteConfirm/@Model.teacher.teacherId" title="Delete this teacher"><img src="~/Content/images/delete_black_48dp.svg" class="delete-btn-logo" /></a>
+    <a class="del_link" href="/Teacher/UpdateTeacher/@Model.teacher.teacherId" title="Update this teacher"><img src="~/Content/images/edit_black_48dp.svg" class="edit-btn-logo" /></a>
+</div>
 <div class="detailed-list">
     <div>ID: @Model.teacher.teacherId</div>
     <div>First Name: @Model.teacher.teacherFname</div>

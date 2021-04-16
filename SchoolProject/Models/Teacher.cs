@@ -8,7 +8,7 @@ namespace SchoolProject.Models
     public class Teacher
     {
         // The following fields define a teacher
-        public int teacherId;
+        public int teacherId = Convert.ToInt32(null);
         public string teacherFname;
         public string teacherLname;
         public string employeeNumber;

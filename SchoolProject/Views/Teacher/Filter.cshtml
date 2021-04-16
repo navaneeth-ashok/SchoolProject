@@ -5,7 +5,7 @@
 }
 
 <div id="containerlist">
-    <h2>Teachers</h2>
+    <h2>Teachers <a class="add_link" href="/Teacher/NewTeacher/" title="Create a new teacher entry"><img src="~/Content/images/person_add_black_48dp.svg" class="add-btn-logo-person" /></a></h2>
     <form action="/Teacher/Filter" method="post">
         <div id="name-div">
             <label for="tName">Teacher Name:</label>
@@ -41,7 +41,7 @@
             </div>
             <div id="column3" class="filter-column">
                 <input type="button" onclick="toggle_fields('employeeno_div');" value="Filter by employee number" class="filter-toggle" id="employee_btn" />
-                <div id="employeeno_div"  class="collapsible-div">
+                <div id="employeeno_div" class="collapsible-div">
                     <label for="temployeeNumber">Number:</label>
                     <input type="text" id="temployeeNumber" name="employeeNumber" placeholder="T000" />
                 </div>

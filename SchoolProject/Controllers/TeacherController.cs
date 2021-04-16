@@ -55,5 +55,67 @@ namespace SchoolProject.Controllers
             IEnumerable<Teacher> filterTeachers = controller.FilterTeachers(name, salaryLow, salaryHigh, hireDateLow, hireDateHigh, employeeNumber);
             return View(filterTeachers);
         }
+
+        public ActionResult DeleteConfirm(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher newTeacher = controller.FindTeacher(id);
+            return View(newTeacher);
+        }
+
+        public ActionResult DeleteTeacher(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            controller.DeleteTeacher(id);
+            return RedirectToAction("Filter");
+        }
+
+        public ActionResult CreateTeacher(string teacherFName, string teacherLName, string empNumber, string salary,string teacherid = null, string hireDate = null)
+        {   
+            // if teacherid is null, we are adding a new data, if the teacherid is present we are updating a record
+            if(teacherid == null)
+            {
+                Teacher newTeacher = new Teacher
+                {
+                    teacherFname = teacherFName,
+                    teacherLname = teacherLName,
+                    employeeNumber = empNumber,
+                    salary = salary,
+                    hireDate = DateTime.Parse(hireDate)
+                };
+                TeacherDataController controller = new TeacherDataController();
+                controller.CreateTeacher(newTeacher, "INSERT");
+                return RedirectToAction("Filter");
+            } else
+            {
+                Teacher newTeacher = new Teacher
+                {
+                    teacherFname = teacherFName,
+                    teacherLname = teacherLName,
+                    employeeNumber = empNumber,
+                    salary = salary,
+                    hireDate = DateTime.Parse(hireDate),
+                    teacherId = Convert.ToInt32(teacherid)
+                };
+                TeacherDataController controller = new TeacherDataController();
+                controller.CreateTeacher(newTeacher, "UPDATE");
+                return RedirectToAction("Show/" + teacherid); 
+            }
+            
+        }
+
+
+        public ActionResult NewTeacher()
+        {
+            return View();
+        }
+
+
+        public ActionResult UpdateTeacher(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher newTeacher = controller.FindTeacher(id);
+            return View(newTeacher);
+        }
     }
 }
