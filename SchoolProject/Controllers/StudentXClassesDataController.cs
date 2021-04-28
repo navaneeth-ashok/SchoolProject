@@ -14,6 +14,11 @@ namespace SchoolProject.Controllers
         // DB class for accessing the DB
         private SchoolDBContext School = new SchoolDBContext();
 
+        /// <summary>
+        /// A function to return the list of StuXCla class objects containing student_ids and class_ids
+        /// </summary>
+        /// <param name="studentClassFilter">StuXClass object will contain student_id and a class_id</param>
+        /// <returns>A list of StuXCla class objects, containing pairs of student_id:class_id</returns>
         [HttpPost]
         [Route("api/StudentXClasses/ListClassesOfStudent/")]
         public IEnumerable<StuXCla> ListClassesOfStudent(StuXCla studentClassFilter)
@@ -55,7 +60,7 @@ namespace SchoolProject.Controllers
 
             // Close the connection
             Conn.Close();
-            // Return the list of student objects
+            // Return the list of  objects
             return Details;
         }
     }
