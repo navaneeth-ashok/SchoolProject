@@ -21,3 +21,15 @@ function toggle_fields(id) {
     }
 }
 
+
+$(function () {
+    $(".datepicker").datepicker({
+        showOn: "button",
+        buttonImage: "../../Content/images/date_range_black_48dp.svg",
+        buttonImageOnly: true,
+        buttonText: "Select date",
+        dateFormat: 'dd-mm-yy',
+        changeMonth: true,
+        changeYear: true
+    });
+});

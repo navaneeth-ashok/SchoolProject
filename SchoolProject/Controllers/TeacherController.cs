@@ -72,35 +72,18 @@ namespace SchoolProject.Controllers
 
         public ActionResult CreateTeacher(string teacherFName, string teacherLName, string empNumber, string salary,string teacherid = null, string hireDate = null)
         {   
-            // if teacherid is null, we are adding a new data, if the teacherid is present we are updating a record
-            if(teacherid == null)
+            
+            Teacher newTeacher = new Teacher
             {
-                Teacher newTeacher = new Teacher
-                {
-                    teacherFname = teacherFName,
-                    teacherLname = teacherLName,
-                    employeeNumber = empNumber,
-                    salary = salary,
-                    hireDate = DateTime.Parse(hireDate)
-                };
-                TeacherDataController controller = new TeacherDataController();
-                controller.CreateTeacher(newTeacher, "INSERT");
-                return RedirectToAction("Filter");
-            } else
-            {
-                Teacher newTeacher = new Teacher
-                {
-                    teacherFname = teacherFName,
-                    teacherLname = teacherLName,
-                    employeeNumber = empNumber,
-                    salary = salary,
-                    hireDate = DateTime.Parse(hireDate),
-                    teacherId = Convert.ToInt32(teacherid)
-                };
-                TeacherDataController controller = new TeacherDataController();
-                controller.CreateTeacher(newTeacher, "UPDATE");
-                return RedirectToAction("Show/" + teacherid); 
-            }
+                teacherFname = teacherFName,
+                teacherLname = teacherLName,
+                employeeNumber = empNumber,
+                salary = salary,
+                hireDate = DateTime.Parse(hireDate)
+            };
+            TeacherDataController controller = new TeacherDataController();
+            controller.CreateTeacher(newTeacher);
+            return RedirectToAction("Filter");
             
         }
 
@@ -116,6 +99,22 @@ namespace SchoolProject.Controllers
             TeacherDataController controller = new TeacherDataController();
             Teacher newTeacher = controller.FindTeacher(id);
             return View(newTeacher);
+        }
+
+        public ActionResult UpdateTeacherChanges(string teacherFName, string teacherLName, string empNumber, string salary, string teacherid = null, string hireDate = null)
+        {
+            Teacher newTeacher = new Teacher
+            {
+                teacherFname = teacherFName,
+                teacherLname = teacherLName,
+                employeeNumber = empNumber,
+                salary = salary,
+                hireDate = DateTime.Parse(hireDate),
+                teacherId = Convert.ToInt32(teacherid)
+            };
+            TeacherDataController controller = new TeacherDataController();
+            controller.UpdateTeacher(newTeacher);
+            return RedirectToAction("Show/" + teacherid);
         }
     }
 }

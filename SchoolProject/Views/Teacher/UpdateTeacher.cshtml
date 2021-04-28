@@ -3,8 +3,28 @@
     ViewBag.Title = "Update " + @Model.teacherFname + " " + @Model.teacherLname;
 }
 
+@*@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+
+    <script type="text/javascript">
+        $(function () {
+            $(".datepicker").datepicker({
+                showOn: "button",
+                buttonImage: "../../Content/images/date_range_black_48dp.svg",
+                buttonImageOnly: true,
+                buttonText: "Select date",
+                dateFormat: 'dd-mm-yy',
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+    </script>
+}*@
+
 <h2>Update teacher record : @Model.teacherFname @Model.teacherLname</h2>
-<form method="post" action="/Teacher/CreateTeacher" class="pure-form pure-form-aligned">
+<form method="post" action="/Teacher/UpdateTeacherChanges" class="pure-form pure-form-aligned">
     <fieldset>
         <div class="pure-control-group">
             <label for="teacherfname">Teacher First Name:</label>
@@ -20,7 +40,7 @@
         </div>
         <div class="pure-control-group">
             <label for="hiredate">HireDate:</label>
-            <input type="text" id="hiredate" name="hireDate" value="@Model.hireDate" />
+            <input type="text" id="hiredate" name="hireDate" value="@Model.hireDate" class="datepicker" />
         </div>
         <div class="pure-control-group">
             <label for="salary">Salary:</label>
@@ -33,4 +53,16 @@
         </div>
     </fieldset>
 </form>
+
+
+@*<script type="text/javascript">
+        $(function () {
+            $("#datepicker").datepicker({
+                showOn: "button",
+                buttonImage: "~/Content/images/date_range_black_48dp.svg",
+                buttonImageOnly: true,
+                buttonText: "Select date"
+            });
+        });
+    </script>*@
 

@@ -290,7 +290,7 @@ namespace SchoolProject.Controllers
         /// <param name="operation">INSERT/UPDATE</param>
         [HttpPost]
         [Route("api/TeacherData/CreateTeacher/")]
-        public void CreateTeacher(Teacher teacherObj, string operation)
+        public void CreateTeacher(Teacher teacherObj)
         {
             // Creating connection to access DB
             MySqlConnection Conn = School.AccessDatabase();
@@ -300,15 +300,40 @@ namespace SchoolProject.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
             // SQL query for inserting teacher info
 
-            if (operation.ToLower() == "insert")
-            {
-                cmd.CommandText = "INSERT INTO TEACHERS(teacherfname, teacherlname, employeenumber, hiredate, salary) " +
+            cmd.CommandText = "INSERT INTO TEACHERS(teacherfname, teacherlname, employeenumber, hiredate, salary) " +
                 " VALUES (@fnamekey, @lnamekey, @empkey, @hirekey, @salarykey)";
-            } else if ( operation.ToLower() == "update")
-            {
-                cmd.CommandText = "UPDATE TEACHERS SET teacherfname=@fnamekey, teacherlname=@lnamekey, employeenumber=@empkey, hiredate=@hirekey, salary=@salarykey " +
+            // Sanitizing the query to prevent SQL injection
+            cmd.Parameters.AddWithValue("@fnamekey", teacherObj.teacherFname);
+            cmd.Parameters.AddWithValue("@lnamekey", teacherObj.teacherLname);
+            cmd.Parameters.AddWithValue("@empkey", teacherObj.employeeNumber);
+            cmd.Parameters.AddWithValue("@hirekey", teacherObj.hireDate);
+            cmd.Parameters.AddWithValue("@salarykey", teacherObj.salary);
+            cmd.Parameters.AddWithValue("@idkey", teacherObj.teacherId);
+
+            cmd.Prepare();
+            // Executing the Query
+            cmd.ExecuteNonQuery();
+        }
+
+        /// <summary>
+        /// A function to update the teacher entry
+        /// </summary>
+        /// <param name="teacherObj">Teacher obj, refer the model</param>
+        [HttpPost]
+        [Route("api/TeacherData/UpdateTeacher/")]
+        public void UpdateTeacher(Teacher teacherObj)
+        {
+            // Creating connection to access DB
+            MySqlConnection Conn = School.AccessDatabase();
+            // Opening connection
+            Conn.Open();
+            // Creating a command for sending query
+            MySqlCommand cmd = Conn.CreateCommand();
+            // SQL query for inserting teacher info
+
+            
+            cmd.CommandText = "UPDATE TEACHERS SET teacherfname=@fnamekey, teacherlname=@lnamekey, employeenumber=@empkey, hiredate=@hirekey, salary=@salarykey " +
                     " where teacherid=@idkey";
-            }            
             // Sanitizing the query to prevent SQL injection
             cmd.Parameters.AddWithValue("@fnamekey", teacherObj.teacherFname);
             cmd.Parameters.AddWithValue("@lnamekey", teacherObj.teacherLname);
